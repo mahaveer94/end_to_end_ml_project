@@ -1,17 +1,18 @@
 # Use the official Python image from the Docker Hub
-FROM python:3.8-slim
+FROM python:3.8-slim-buster
+
+RUN apt update -y && apt install awscli -y
+
 
 # Set the working directory in the container
-WORKDIR /src
+WORKDIR /app
 
 # Copy the requirements file into the container
-COPY requirements.txt .
+COPY . /app
 
 # Install any dependencies specified in requirements.txt
-RUN pip install --no-cache-dir -r requirements.txt
+RUN pip install -r requirements.txt
 
-# Copy the rest of the application code into the container
-COPY . .
 
 # Specify the command to run on container start
-CMD ["python", "app.py"]
+CMD ["python3", "app.py"]
